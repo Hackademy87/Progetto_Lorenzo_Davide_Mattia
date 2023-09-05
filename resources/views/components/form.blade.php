@@ -21,18 +21,19 @@
     
   </select>
   </div> -->
+  <div class="mb-3">
+                    <label for="tags me-3">Tags</label>
+        
+                    @foreach ($materials as $material)
+                        <div class="btn-group m-2" role="group" aria-label="Basic checkbox toggle button group">
+                            <input type="checkbox" class="btn-check" id="{{ $material->id }}" autocomplete="off"
+                                name="materialId[]" value="{{ $material->id }}">
+                            <label class="btn btn-outline-primary text-black border-black"
+                                for="{{ $material->id }}">{{ $material->name }}</label>
+                        </div>
+                    @endforeach
+                </div>
 
-
-  <!-- <div class="mb-3">
-    <label  class="form-label">materiale</label>
-    <select class="form-control" name="materialId[]" multiple>
-
-    <option value="null" disabled >seleziona i materiali</option>
-   
-    <option value=""></option>
-    
-  </select>
-  </div> -->
 
 <!-- 
   <div class="mb-3">

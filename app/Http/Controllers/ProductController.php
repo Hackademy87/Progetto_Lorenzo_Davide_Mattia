@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Material;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -22,15 +23,20 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+
+      $materials = Material::all();
+
+
+        return view('products.create',compact('materials'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        Product::create([
+    { 
+    
+     $product = Product::create([
 
         'name'=>$request->input('name'),
         'price'=>$request->input('price'),
@@ -39,6 +45,15 @@ class ProductController extends Controller
         'user_id'=> Auth::user()->id
 
         ]);
+
+
+$materials = $request->input('materialId');
+foreach($materials as $material){
+
+    $product->materials()->attach($material);
+}
+
+
 return redirect()->route('welcome')->with('message','Prodotto aggiunto con successo !');
 
     }
@@ -85,4 +100,17 @@ return redirect()->route('welcome')->with('message','Prodotto aggiunto con succe
         $product->delete();
         return redirect()->back()->with('message','prodotto eliminato correttamente');
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    
 }
