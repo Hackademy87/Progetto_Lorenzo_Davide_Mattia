@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -30,7 +31,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         Product::create([
-        
+
         'name'=>$request->input('name'),
         'price'=>$request->input('price'),
         'img'=>$request->file('img')->store('public/product'),
@@ -55,7 +56,7 @@ return redirect()->route('welcome')->with('message','Prodotto aggiunto con succe
      */
     public function edit(Product $product)
     {
-        //
+        return view('products.edit',compact('product'));
     }
 
     /**
@@ -63,7 +64,17 @@ return redirect()->route('welcome')->with('message','Prodotto aggiunto con succe
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $oldimg=$product->img;
+        $product->update([
+            'img'=> $request->file('img') == null ? $oldimg : $request->file('img')->store('public/product'),
+            'name'=> $request->input('name'),
+            'description'=> $request->input('description'),
+            'price'=> $request->input('price'),
+        ]);
+        if($request->file('img') != null){
+            Storage::delete($oldimg);
+        }
+        return redirect()->route('welcome')->with('message','prodotto modificato corretamente');
     }
 
     /**
@@ -71,6 +82,7 @@ return redirect()->route('welcome')->with('message','Prodotto aggiunto con succe
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return redirect()->back()->with('message','prodotto eliminato correttamente');
     }
 }
