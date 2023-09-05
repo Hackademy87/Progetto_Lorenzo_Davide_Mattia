@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="container my-5">
+    <div  class="container my-5">
         <div class="row">
             <form action="{{route('product.update',$product)}}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -15,6 +15,8 @@
                         value="{{ $product->price }}" >
               </div>
 
+
+
               <div class="mb-3">
                     <label class="form-label">descrizione</label>
                     <input type="text" name='description' class="form-control"
@@ -26,7 +28,7 @@
                     <label class="form-label">Foto</label>
                     <input type="file" name="img" class="form-control">
                     <img src="{{ Storage::url($product->img) }}" alt="{{ $product->name }}"
-                        style="heigt:60px; width:60px;">
+                        style="height:60px; width:60px;">
                 </div>
                 <button type="submit" class="btn btn-success">Modifica</button>
             </form>

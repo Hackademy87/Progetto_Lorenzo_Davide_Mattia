@@ -39,11 +39,12 @@ $materials = "";
 foreach($this->materials as $material){
 
 
-$materials = $materials . "#material->name";
+$materials = $materials . "#$material->name";
 
 
 }
 
+return $materials;
 
 
 }
