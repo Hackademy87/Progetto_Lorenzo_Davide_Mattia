@@ -34,8 +34,8 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    { 
-    
+    {
+
      $product = Product::create([
 
         'name'=>$request->input('name'),
@@ -102,6 +102,10 @@ return redirect()->route('welcome')->with('message','Prodotto aggiunto con succe
     }
 
 
+    public function seeYourProduct(){
+        $products = Auth::user()->products;
+        return view('products.yourProduct', compact('products'));
+    }
 
 
 
@@ -112,5 +116,4 @@ return redirect()->route('welcome')->with('message','Prodotto aggiunto con succe
 
 
 
-    
 }

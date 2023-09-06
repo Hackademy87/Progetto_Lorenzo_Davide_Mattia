@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Material;
 use App\Models\Product;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -22,9 +23,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (Schema::hasTable('products')) {
+        if (Schema::hasTable('products') && Schema::hasTable('materials')) {
+            $materials = Material::all();
             $products = Product::all();
             View::share(['products' => $products]);
+            View::share(['materials' => $materials]);
+
         }
     }
 }
